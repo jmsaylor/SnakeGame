@@ -1,18 +1,15 @@
 package sample;
 
+import apple.Apple;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import snake.Cell;
+import util.Cell;
 import snake.Snake;
 
 import java.util.List;
@@ -36,6 +33,8 @@ public class Main extends Application {
         Scene scene = new Scene(root);
 
         Snake snake = new Snake();
+        Apple apple = new Apple();
+        drawApple(gc, apple.getLocation());
 
         scene.setOnKeyPressed(keyEvent -> {
             var code = keyEvent.getCode();
@@ -49,6 +48,10 @@ public class Main extends Application {
 
             @Override
             public void handle(long l) {
+                if (snake.getHeadX() == apple.getX() && snake.getHeadY() == apple.getY()) {
+                    List<Cell> locations = apple.changeLocation();
+                    drawApple(gc, locations.get(0), locations.get(1));
+                }
                 draw(gc, snake, l);
 
             }
@@ -67,6 +70,18 @@ public class Main extends Application {
         gc.fillRect(head.getX(), head.getY(), 10, 10);
         gc.setFill(Color.BLACK);
         gc.fillRect(tail.getX(), tail.getY(), 10, 10);
+    }
+
+    public void drawApple(GraphicsContext gc, Cell oldLocation, Cell newLocation) {
+        gc.setFill(Color.BLUEVIOLET);
+        gc.fillRect(newLocation.getX(), newLocation.getY(), 10, 10);
+        gc.setFill(Color.BLACK);
+        gc.fillRect(oldLocation.getX(), oldLocation.getY(), 10, 10);
+    }
+
+    public void drawApple(GraphicsContext gc, Cell newLocation) {
+        gc.setFill(Color.BLUEVIOLET);
+        gc.fillRect(newLocation.getX(), newLocation.getY(), 10, 10);
     }
 
 }

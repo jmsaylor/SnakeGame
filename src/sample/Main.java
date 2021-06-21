@@ -1,6 +1,7 @@
 package sample;
 
 import apple.Apple;
+import board.Board;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -34,6 +35,7 @@ public class Main extends Application {
 
         Snake snake = new Snake();
         Apple apple = new Apple();
+        Board board = new Board(snake, apple);
         drawApple(gc, apple.getLocation());
 
         scene.setOnKeyPressed(keyEvent -> {
@@ -48,7 +50,7 @@ public class Main extends Application {
 
             @Override
             public void handle(long l) {
-                if (snake.getHeadX() == apple.getX() && snake.getHeadY() == apple.getY()) {
+                if (board.isAppleEaten()) {
                     List<Cell> locations = apple.changeLocation();
                     drawApple(gc, locations.get(0), locations.get(1));
                 }

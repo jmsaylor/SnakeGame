@@ -17,4 +17,12 @@ public class Board {
         return (snake.getHeadX() > apple.getX() - 10 && snake.getHeadX() < apple.getX() + 10
         && snake.getHeadY() > apple.getY() - 10 && snake.getHeadY() < apple.getY() + 10);
     }
+
+    public Snake getSnake() {
+        return snake;
+    }
+
+    public Apple getApple() {
+        return apple;
+    }
 }

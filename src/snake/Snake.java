@@ -20,9 +20,31 @@ public class Snake {
         }
     }
 
-    public void grow() {
-        length++;
-    }
+    public List<Cell> grow() {
+            body.addFirst(head);
+            switch (direction) {
+                case UP:
+                    head = new Cell(head.getX(), head.getY() - 10);
+                    break;
+                case DOWN:
+                    head = new Cell(head.getX(), head.getY() + 10);
+                    break;
+                case LEFT:
+                    head = new Cell(head.getX() - 10, head.getY());
+                    break;
+                case RIGHT:
+                    head = new Cell(head.getX() + 10, head.getY());
+                    break;
+            }
+            body.addLast(body.peekLast().clone());
+            body.addLast(body.peekLast().clone());
+            body.addLast(body.peekLast().clone());
+            body.addLast(body.peekLast().clone());
+            body.addLast(body.peekLast().clone());
+
+            return List.of(head, body.peekLast());
+
+        }
 
     public List<Cell> move() {
         body.addFirst(head);

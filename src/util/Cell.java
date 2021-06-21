@@ -1,6 +1,6 @@
 package util;
 
-public class Cell {
+public class Cell implements Cloneable {
     int x;
     int y;
 
@@ -19,5 +19,10 @@ public class Cell {
 
     public int getY() {
         return y;
+    }
+
+    @Override
+    public Cell clone() {
+        return new Cell(x, y);
     }
 }

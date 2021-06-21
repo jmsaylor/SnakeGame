@@ -50,11 +50,7 @@ public class Main extends Application {
 
             @Override
             public void handle(long l) {
-                if (board.isAppleEaten()) {
-                    List<Cell> locations = apple.changeLocation();
-                    drawApple(gc, locations.get(0), locations.get(1));
-                }
-                draw(gc, snake, l);
+                draw(gc, snake, board);
 
             }
         }.start();
@@ -64,18 +60,32 @@ public class Main extends Application {
 
     }
 
-    public void draw(GraphicsContext gc, Snake snake, long time) {
-        List<Cell> cells = snake.move();
-        Cell head = cells.get(0);
-        Cell tail = cells.get(1);
-        gc.setFill(Color.BLANCHEDALMOND);
-        gc.fillRect(head.getX(), head.getY(), 10, 10);
-        gc.setFill(Color.BLACK);
-        gc.fillRect(tail.getX(), tail.getY(), 10, 10);
+    public void draw(GraphicsContext gc, Snake snake, Board board) {
+        List<Cell> cells;
+
+        if (board.isAppleEaten()) {
+
+            List<Cell> locations = board.getApple().changeLocation();
+            drawApple(gc, locations.get(0), locations.get(1));
+            cells = snake.grow();
+            Cell head = cells.get(0);
+            Cell tail = cells.get(1);
+            gc.setFill(Color.BLANCHEDALMOND);
+            gc.fillRect(head.getX(), head.getY(), 10, 10);
+
+        } else {
+            cells = snake.move();
+            Cell head = cells.get(0);
+            Cell tail = cells.get(1);
+            gc.setFill(Color.BLANCHEDALMOND);
+            gc.fillRect(head.getX(), head.getY(), 10, 10);
+            gc.setFill(Color.BLACK);
+            gc.fillRect(tail.getX(), tail.getY(), 10, 10);
+        }
     }
 
     public void drawApple(GraphicsContext gc, Cell oldLocation, Cell newLocation) {
-        gc.setFill(Color.BLUEVIOLET);
+        gc.setFill(Color.ROSYBROWN);
         gc.fillRect(newLocation.getX(), newLocation.getY(), 10, 10);
         gc.setFill(Color.BLACK);
         gc.fillRect(oldLocation.getX(), oldLocation.getY(), 10, 10);
